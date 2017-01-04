@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My Movie List</string>
+    <string name="error_message">Error to load movies</string>
+</resources>
