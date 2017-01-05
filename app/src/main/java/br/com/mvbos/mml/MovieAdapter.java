@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import br.com.mvbos.mml.data.Movie;
+
 /**
  * Created by Marcus Becker on 03/01/2017.
  */
@@ -17,6 +19,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     private String[] imagesPath;
     private Context context;
+    private ClickListItemListener clickListItemListener;
+
+
+    public interface ClickListItemListener {
+        void onClickListItem(int clickedItemIndex);
+    }
+
 
     @Override
     public MovieAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,11 +55,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         }
     }
 
-    public String[] getImagesPath() {
-        return imagesPath;
+    public void setImagesPath(String imageURL, Movie[] movies) {
+        imagesPath = new String[movies.length];
+        for (int i = 0; i < movies.length; i++) {
+            imagesPath[i] = imageURL + movies[i].getImagePath();
+        }
+
+        notifyDataSetChanged();
     }
 
-    public void setImagesPath(String[] imagesPath) {
-        this.imagesPath = imagesPath;
+
+    public ClickListItemListener getClickListItemListener() {
+        return clickListItemListener;
+    }
+
+    public void setClickListItemListener(ClickListItemListener clickListItemListener) {
+        this.clickListItemListener = clickListItemListener;
     }
 }

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">My Movie List</string>
     <string name="error_message">Error to load movies</string>
+    <string name="token" translatable="false"></string>
+    <string name="popular_url" translatable="false">http://api.themoviedb.org/3/movie/popular</string>
+    <string name="top_rated_url" translatable="false">http://api.themoviedb.org/3/movie/top_rated</string>
+    <string name="image_url" translatable="false">http://image.tmdb.org/t/p/w500</string>
 </resources>
