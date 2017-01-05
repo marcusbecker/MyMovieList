@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
 
             if (moviesArray != null) {
                 String imageURL = getResources().getString(R.string.image_url);
-
                 movieAdapter.setImagesPath(imageURL, moviesArray);
+                clearErrorMessage();
 
             } else {
                 showErrorMessage();

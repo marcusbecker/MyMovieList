@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import br.com.mvbos.mml.data.Movie;
 
 /**
+ * Parse JSON resposes to Java Objects
  * Created by Marcus Becker on 04/01/2017.
  */
 public class JSONUtils {
