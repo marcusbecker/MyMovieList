@@ -46,12 +46,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         return imagesPath == null ? 0 : imagesPath.length;
     }
 
-    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView movieImage;
 
         public MovieAdapterViewHolder(View itemView) {
             super(itemView);
             movieImage = (ImageView) itemView.findViewById(R.id.iv_movie_image);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListItemListener != null) {
+                int position = getAdapterPosition();
+                clickListItemListener.onClickListItem(position);
+            }
         }
     }
 

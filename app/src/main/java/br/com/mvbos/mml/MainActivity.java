@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
+    private Movie[] moviesArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +48,41 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
 
         movieAdapter.setClickListItemListener(this);
 
+        new MovieTask().execute(POPULAR);
+
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        new MovieTask().execute(POPULAR);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_popular) {
+            updateTitle(POPULAR);
+            new MovieTask().execute(POPULAR);
+            return true;
+
+        } else if (item.getItemId() == R.id.action_top_rated) {
+            updateTitle(RATED);
+            new MovieTask().execute(RATED);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateTitle(String optionSel) {
+        String title = getString(R.string.app_name) + ": ";
+        if (POPULAR.equals(optionSel)) {
+            title += getString(R.string.popular_movies);
+        } else {
+            title += getString(R.string.top_rated_movies);
+        }
+
+        setTitle(title);
     }
 
     public class MovieTask extends AsyncTask<String, Void, Movie[]> {
@@ -95,13 +126,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
 
         @Override
         protected void onPostExecute(Movie[] movies) {
-            super.onPostExecute(movies);
             progressBar.setVisibility(View.INVISIBLE);
 
-            if (movies != null) {
+            moviesArray = movies;
+
+            if (moviesArray != null) {
                 String imageURL = getResources().getString(R.string.image_url);
 
-                movieAdapter.setImagesPath(imageURL, movies);
+                movieAdapter.setImagesPath(imageURL, moviesArray);
 
             } else {
                 showErrorMessage();
@@ -123,8 +155,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
 
     @Override
     public void onClickListItem(int clickedItemIndex) {
+        if (moviesArray == null) {
+            return;
+        }
+
         Intent i = new Intent(MainActivity.this, MovieDetailActivity.class);
-        i.putExtra(Intent.EXTRA_TEXT, "0");
+        i.putExtra(Intent.EXTRA_TEXT, moviesArray[clickedItemIndex]);
         startActivity(i);
     }
 }

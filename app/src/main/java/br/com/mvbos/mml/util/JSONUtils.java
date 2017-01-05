@@ -27,8 +27,11 @@ public class JSONUtils {
                 long id = jsonMovie.getLong("id");
                 String title = jsonMovie.getString("title");
                 String imagePath = jsonMovie.getString("poster_path");
+                float rating = (float) jsonMovie.getDouble("vote_average");
+                String overview = jsonMovie.getString("overview");
+                String releaseDate = jsonMovie.getString("release_date");
 
-                movies[i] = new Movie(id, title, imagePath);
+                movies[i] = new Movie(id, title, imagePath, rating, overview, releaseDate);
             }
 
         } catch (JSONException e) {
