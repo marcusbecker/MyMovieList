@@ -1,11 +1,13 @@
 package br.com.mvbos.mml.data;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
+ * Movie object
  * Created by Marcus Becker on 04/01/2017.
  */
-public class Movie implements Serializable {
+public class Movie implements Parcelable {
     private long id;
     private String title;
     private String imagePath;
@@ -18,6 +20,15 @@ public class Movie implements Serializable {
         this.id = id;
     }
 
+    private Movie(Parcel parcel) {
+        this.id = parcel.readLong();
+        this.title = parcel.readString();
+        this.imagePath = parcel.readString();
+        this.rating = parcel.readFloat();
+        this.overview = parcel.readString();
+        this.releaseDate = parcel.readString();
+    }
+
     public Movie(long id, String title, String imagePath, float rating, String overview, String releaseDate) {
         this.id = id;
         this.title = title;
@@ -26,6 +37,19 @@ public class Movie implements Serializable {
         this.overview = overview;
         this.releaseDate = releaseDate;
     }
+
+    static final Parcelable.Creator<Movie> CREATOR
+            = new Parcelable.Creator<Movie>() {
+
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
 
     public long getId() {
         return id;
@@ -117,5 +141,20 @@ public class Movie implements Serializable {
                 ", overview='" + overview + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(title);
+        parcel.writeString(imagePath);
+        parcel.writeFloat(rating);
+        parcel.writeString(overview);
+        parcel.writeString(releaseDate);
     }
 }
