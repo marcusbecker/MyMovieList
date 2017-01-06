@@ -8,4 +8,5 @@
     <string name="image_url_thumb" translatable="false">http://image.tmdb.org/t/p/w185</string>
     <string name="popular_movies">Most popular</string>
     <string name="top_rated_movies">Top rated</string>
+    <string name="movie_poster">Movie Poster</string>
 </resources>

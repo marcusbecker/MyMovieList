@@ -31,11 +31,10 @@ import java.util.Scanner;
 public final class NetworkUtils {
 
 
-    public static URL buildUrl(String path, String token, String id) {
+    public static URL buildUrl(String path, String token) {
 
         Uri builtUri = Uri.parse(path).buildUpon()
                 .appendQueryParameter("api_key", token)
-                .appendQueryParameter("id", id)
                 .build();
 
         URL url = null;

@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import br.com.mvbos.mml.data.Movie;
 
 /**
+ * Movie adapter view
  * Created by Marcus Becker on 03/01/2017.
  */
 

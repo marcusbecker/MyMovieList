@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
         setTitle(title);
     }
 
-    public class MovieTask extends AsyncTask<String, Void, Movie[]> {
+    private class MovieTask extends AsyncTask<String, Void, Movie[]> {
 
         @Override
         protected void onPreExecute() {
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
                 order = getResources().getString(R.string.top_rated_url);
             }
 
-            URL url = NetworkUtils.buildUrl(order, token, "");
+            URL url = NetworkUtils.buildUrl(order, token);
 
             try {
                 String response = NetworkUtils.getHttpResponse(url);
