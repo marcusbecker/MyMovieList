@@ -8,6 +8,7 @@ import android.os.Parcelable;
  * Created by Marcus Becker on 04/01/2017.
  */
 public class Movie implements Parcelable {
+    public static final String PARCELABLE_KEY = "parcel_movie";
     private long id;
     private String title;
     private String imagePath;

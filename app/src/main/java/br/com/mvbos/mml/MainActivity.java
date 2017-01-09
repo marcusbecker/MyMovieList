@@ -2,7 +2,6 @@ package br.com.mvbos.mml;
 
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,22 +12,18 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.net.URL;
-
 import br.com.mvbos.mml.data.Movie;
-import br.com.mvbos.mml.util.JSONUtils;
-import br.com.mvbos.mml.util.NetworkUtils;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.ClickListItemListener {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.ClickListItemListener, MovieService.AsyncTaskDelegate<Movie[]> {
 
-    private static final String RATED = "top_rated";
-    private static final String POPULAR = "popular";
 
     private TextView errorMessage;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
     private Movie[] moviesArray;
+    private MovieService movieService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +43,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
 
         movieAdapter.setClickListItemListener(this);
 
-        new MovieTask().execute(POPULAR);
+        movieService = new MovieService(MainActivity.this, this);
 
+        progressBar.setVisibility(View.VISIBLE);
+        movieService.execute(MovieService.POPULAR);
     }
 
     @Override
@@ -60,14 +57,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        progressBar.setVisibility(View.VISIBLE);
+
         if (item.getItemId() == R.id.action_popular) {
-            updateTitle(POPULAR);
-            new MovieTask().execute(POPULAR);
+            updateTitle(MovieService.POPULAR);
+            movieService.execute(MovieService.POPULAR);
             return true;
 
         } else if (item.getItemId() == R.id.action_top_rated) {
-            updateTitle(RATED);
-            new MovieTask().execute(RATED);
+            updateTitle(MovieService.RATED);
+            movieService.execute(MovieService.RATED);
             return true;
         }
 
@@ -75,72 +74,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
     }
 
     private void updateTitle(String optionSel) {
-        String title = getString(R.string.app_name) + ": ";
-        if (POPULAR.equals(optionSel)) {
-            title += getString(R.string.popular_movies);
+        String title;
+        if (MovieService.POPULAR.equals(optionSel)) {
+            title = getString(R.string.popular_movies);
         } else {
-            title += getString(R.string.top_rated_movies);
+            title = getString(R.string.top_rated_movies);
         }
 
-        setTitle(title);
+        setTitle(String.format(getString(R.string.movie_title), getString(R.string.app_name), title));
     }
 
-    private class MovieTask extends AsyncTask<String, Void, Movie[]> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected Movie[] doInBackground(String... strings) {
-            if (strings.length == 0) {
-                return null;
-            }
-
-            Movie[] movies = null;
-
-            String param = strings[0];
-            String token = getResources().getString(R.string.token);
-
-            String order;
-            if (POPULAR.equals(param)) {
-                order = getResources().getString(R.string.popular_url);
-            } else {
-                order = getResources().getString(R.string.top_rated_url);
-            }
-
-            URL url = NetworkUtils.buildUrl(order, token);
-
-            try {
-                String response = NetworkUtils.getHttpResponse(url);
-                movies = JSONUtils.toMovie(response);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return movies;
-        }
-
-        @Override
-        protected void onPostExecute(Movie[] movies) {
-            progressBar.setVisibility(View.INVISIBLE);
-
-            moviesArray = movies;
-
-            if (moviesArray != null) {
-                String imageURL = getResources().getString(R.string.image_url);
-                movieAdapter.setImagesPath(imageURL, moviesArray);
-                clearErrorMessage();
-
-            } else {
-                showErrorMessage();
-            }
-
-        }
-    }
 
     private void clearErrorMessage() {
         errorMessage.setVisibility(View.INVISIBLE);
@@ -160,7 +103,23 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
         }
 
         Intent i = new Intent(MainActivity.this, MovieDetailActivity.class);
-        i.putExtra(Intent.EXTRA_TEXT, moviesArray[clickedItemIndex]);
+        i.putExtra(Movie.PARCELABLE_KEY, moviesArray[clickedItemIndex]);
         startActivity(i);
+    }
+
+    @Override
+    public void processFinish(Movie[] output) {
+        progressBar.setVisibility(View.INVISIBLE);
+
+        moviesArray = output;
+
+        if (moviesArray != null) {
+            String imageURL = getResources().getString(R.string.image_url);
+            movieAdapter.setImagesPath(imageURL, moviesArray);
+            clearErrorMessage();
+
+        } else {
+            showErrorMessage();
+        }
     }
 }

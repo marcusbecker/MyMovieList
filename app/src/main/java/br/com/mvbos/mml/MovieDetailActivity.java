@@ -35,8 +35,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         poster = (ImageView) findViewById(R.id.ivPoster);
 
         Intent intent = getIntent();
-        if (intent.hasExtra(Intent.EXTRA_TEXT)) {
-            movieSelected = intent.getParcelableExtra(Intent.EXTRA_TEXT);
+        if (intent.hasExtra(Movie.PARCELABLE_KEY)) {
+            movieSelected = intent.getParcelableExtra(Movie.PARCELABLE_KEY);
 
             title.setText(movieSelected.getTitle());
             release.setText(movieSelected.getReleaseDate());
