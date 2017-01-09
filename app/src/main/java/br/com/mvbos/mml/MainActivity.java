@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
     private Movie[] moviesArray;
-    private MovieService movieService;
 
 
     @Override
@@ -43,10 +42,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
 
         movieAdapter.setClickListItemListener(this);
 
-        movieService = new MovieService(MainActivity.this, this);
+        executeService(MovieService.POPULAR);
+    }
 
+    private void executeService(String order) {
         progressBar.setVisibility(View.VISIBLE);
-        movieService.execute(MovieService.POPULAR);
+        MovieService movieService = new MovieService(MainActivity.this, this);
+        movieService.execute(order);
+        updateTitle(order);
     }
 
     @Override
@@ -60,13 +63,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
         progressBar.setVisibility(View.VISIBLE);
 
         if (item.getItemId() == R.id.action_popular) {
-            updateTitle(MovieService.POPULAR);
-            movieService.execute(MovieService.POPULAR);
+            executeService(MovieService.POPULAR);
             return true;
 
         } else if (item.getItemId() == R.id.action_top_rated) {
-            updateTitle(MovieService.RATED);
-            movieService.execute(MovieService.RATED);
+            executeService(MovieService.RATED);
             return true;
         }
 

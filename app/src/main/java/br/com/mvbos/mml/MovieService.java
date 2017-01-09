@@ -22,8 +22,8 @@ public class MovieService extends AsyncTask<String, Void, Movie[]> {
         void processFinish(T output);
     }
 
-    private Context context;
-    private AsyncTaskDelegate delegate;
+    private final Context context;
+    private final AsyncTaskDelegate delegate;
 
 
     public MovieService(Context context, AsyncTaskDelegate delegate) {
