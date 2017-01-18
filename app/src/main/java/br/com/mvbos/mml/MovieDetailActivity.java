@@ -2,17 +2,26 @@ package br.com.mvbos.mml;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 
 import br.com.mvbos.mml.data.Movie;
+import br.com.mvbos.mml.util.JSONUtils;
+import br.com.mvbos.mml.util.NetworkUtils;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie> {
+
+    private static final int TRAILER_LOADER_ID = 32;
 
     private Movie movieSelected;
     private TextView title;
@@ -47,6 +56,94 @@ public class MovieDetailActivity extends AppCompatActivity {
 
             String path = getString(R.string.image_url_thumb) + movieSelected.getImagePath();
             Picasso.with(MovieDetailActivity.this).load(path).into(poster);
+
+
+            final LoaderManager loaderManager = getSupportLoaderManager();
+            loaderManager.initLoader(TRAILER_LOADER_ID, null, this);
+
+            Bundle myBundle = new Bundle();
+            myBundle.putLong(Movie.ID_KEY, movieSelected.getId());
+
+            Loader<Movie> myLoader = loaderManager.getLoader(TRAILER_LOADER_ID);
+
+            if (myLoader == null) {
+                loaderManager.initLoader(TRAILER_LOADER_ID, myBundle, this);
+            } else {
+                loaderManager.restartLoader(TRAILER_LOADER_ID, myBundle, this);
+            }
         }
     }
+
+    @Override
+    public Loader<Movie> onCreateLoader(int id, final Bundle args) {
+        return new AsyncTaskLoader<Movie>(this) {
+
+            Movie cache;
+
+            @Override
+            protected void onStartLoading() {
+                super.onStartLoading();
+                if (args == null) {
+                    return;
+                }
+
+                //TODO show progress view
+
+                if (cache != null) {
+                    deliverResult(cache);
+                } else {
+                    forceLoad();
+                }
+            }
+
+            @Override
+            public Movie loadInBackground() {
+                long id = args.getLong(Movie.ID_KEY, 0);
+
+                if (id == 0) {
+                    return null;
+                }
+
+                String token = getString(R.string.token);
+                String strUrl = String.format(getString(R.string.trailer_url), id);
+
+                URL url = NetworkUtils.buildUrl(strUrl, token);
+
+                try {
+                    String response = NetworkUtils.getHttpResponse(url);
+                    Movie movie = JSONUtils.toMovieTrailer(response);
+
+                    return movie;
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            public void deliverResult(Movie data) {
+                cache = data;
+                super.deliverResult(data);
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Movie> loader, Movie data) {
+        //TODO hidden progress view
+        if (null == data) {
+            //showErrorMessage();
+        } else {
+            //mSearchResultsTextView.setText(data);
+            //showJsonDataView();
+        }
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Movie> loader) {
+    }
+
 }

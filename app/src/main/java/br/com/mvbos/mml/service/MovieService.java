@@ -1,10 +1,11 @@
-package br.com.mvbos.mml;
+package br.com.mvbos.mml.service;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import java.net.URL;
 
+import br.com.mvbos.mml.R;
 import br.com.mvbos.mml.data.Movie;
 import br.com.mvbos.mml.util.JSONUtils;
 import br.com.mvbos.mml.util.NetworkUtils;
@@ -59,7 +60,7 @@ public class MovieService extends AsyncTask<String, Void, Movie[]> {
 
         try {
             String response = NetworkUtils.getHttpResponse(url);
-            movies = JSONUtils.toMovie(response);
+            movies = JSONUtils.toMovies(response);
 
         } catch (Exception e) {
             e.printStackTrace();

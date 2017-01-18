@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">My Movie List</string>
     <string name="error_message">Sorry&#8230; Error to load movies</string>
-    <string name="token" translatable="false">1e6937d8b2fe3a3d8cfd25f2dd6dffc7</string>
+    <string name="token" translatable="false"></string>
     <string name="popular_url" translatable="false">http://api.themoviedb.org/3/movie/popular</string>
     <string name="top_rated_url" translatable="false">http://api.themoviedb.org/3/movie/top_rated</string>
+    <string name="trailer_url" translatable="false">http://api.themoviedb.org/3/movie/%1$d/videos</string>
+    <string name="reviews_url" translatable="false">http://api.themoviedb.org/3/movie/%1$d/reviews</string>
     <string name="image_url" translatable="false">http://image.tmdb.org/t/p/w500</string>
     <string name="image_url_thumb" translatable="false">http://image.tmdb.org/t/p/w185</string>
     <string name="popular_movies">Most popular</string>

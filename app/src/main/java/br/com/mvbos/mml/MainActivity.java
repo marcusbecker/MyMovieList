@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import br.com.mvbos.mml.data.Movie;
+import br.com.mvbos.mml.service.MovieService;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ClickListItemListener, MovieService.AsyncTaskDelegate<Movie[]> {
 

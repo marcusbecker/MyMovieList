@@ -9,6 +9,8 @@ import android.os.Parcelable;
  */
 public class Movie implements Parcelable {
     public static final String PARCELABLE_KEY = "parcel_movie";
+    public static final java.lang.String ID_KEY = "id_movie";
+
     private long id;
     private String title;
     private String imagePath;
@@ -16,6 +18,8 @@ public class Movie implements Parcelable {
     private float rating;
     private String overview;
     private String releaseDate;
+
+    private Trailer[] trailers;
 
     public Movie(long id) {
         this.id = id;
@@ -114,6 +118,15 @@ public class Movie implements Parcelable {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+
+    public Trailer[] getTrailers() {
+        return trailers;
+    }
+
+    public void setTrailers(Trailer[] trailers) {
+        this.trailers = trailers;
     }
 
     @Override
