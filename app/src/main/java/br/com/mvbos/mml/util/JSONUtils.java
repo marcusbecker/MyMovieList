@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.mvbos.mml.data.Movie;
+import br.com.mvbos.mml.data.Review;
 import br.com.mvbos.mml.data.Trailer;
 
 /**
@@ -43,19 +44,6 @@ public class JSONUtils {
         return movies;
     }
 
-    /*
-    "id": 328111,
-        "results": [{
-            "id": "571cdc48c3a3684e620018b8",
-            "iso_639_1": "en",
-            "iso_3166_1": "US",
-            "key": "i-80SGWfEjM",
-            "name": "Official Teaser Trailer",
-            "site": "YouTube",
-            "size": 1080,
-            "type": "Trailer"
-    *
-    * */
     public static Movie toMovieTrailer(String response) {
         Movie movie = null;
 
@@ -91,5 +79,69 @@ public class JSONUtils {
         }
 
         return movie;
+    }
+
+    public static void populeMovieTrailer(Movie movie, String response) {
+        try {
+            JSONObject object = new JSONObject(response);
+            //long id = object.getLong("id");
+
+            JSONArray arr = object.getJSONArray("results");
+
+            if (arr != null) {
+                Trailer[] trailers = new Trailer[arr.length()];
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject json = arr.getJSONObject(i);
+
+                    String trailerId = json.getString("id");
+                    String key = json.getString("key");
+                    String name = json.getString("name");
+                    String site = json.getString("site");
+
+                    trailers[i] = new Trailer(trailerId);
+                    trailers[i].setKey(key);
+                    trailers[i].setName(name);
+                    trailers[i].setSite(site);
+                }
+
+                movie.setTrailers(trailers);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void populeMovieReviews(Movie movie, String response) {
+        try {
+            JSONObject object = new JSONObject(response);
+            //long id = object.getLong("id");
+
+            JSONArray arr = object.getJSONArray("results");
+
+            if (arr != null) {
+                Review[] reviews = new Review[arr.length()];
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject json = arr.getJSONObject(i);
+
+                    String reviewId = json.getString("id");
+                    String author = json.getString("author");
+                    String content = json.getString("content");
+                    String url = json.getString("url");
+
+                    reviews[i] = new Review(reviewId);
+                    reviews[i].setAuthor(author);
+                    reviews[i].setContent(content);
+                    reviews[i].setUrl(url);
+                }
+
+                movie.setReviews(reviews);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

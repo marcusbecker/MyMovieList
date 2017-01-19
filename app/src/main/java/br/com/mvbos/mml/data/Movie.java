@@ -20,6 +20,7 @@ public class Movie implements Parcelable {
     private String releaseDate;
 
     private Trailer[] trailers;
+    private Review[] reviews;
 
     public Movie(long id) {
         this.id = id;
@@ -127,6 +128,14 @@ public class Movie implements Parcelable {
 
     public void setTrailers(Trailer[] trailers) {
         this.trailers = trailers;
+    }
+
+    public Review[] getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Review[] reviews) {
+        this.reviews = reviews;
     }
 
     @Override

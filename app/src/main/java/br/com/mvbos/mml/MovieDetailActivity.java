@@ -78,18 +78,21 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     public Loader<Movie> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<Movie>(this) {
 
-            Movie cache;
+            private Movie cache;
+            private long id;
 
             @Override
             protected void onStartLoading() {
                 super.onStartLoading();
-                if (args == null) {
+                if (args == null || !args.containsKey(Movie.ID_KEY)) {
                     return;
                 }
 
+                id = args.getLong(Movie.ID_KEY, 0);
+
                 //TODO show progress view
 
-                if (cache != null) {
+                if (cache != null && cache.getId() == id) {
                     deliverResult(cache);
                 } else {
                     forceLoad();
@@ -98,11 +101,6 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
             @Override
             public Movie loadInBackground() {
-                long id = args.getLong(Movie.ID_KEY, 0);
-
-                if (id == 0) {
-                    return null;
-                }
 
                 String token = getString(R.string.token);
                 String strUrl = String.format(getString(R.string.trailer_url), id);
@@ -111,13 +109,21 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
                 try {
                     String response = NetworkUtils.getHttpResponse(url);
-                    Movie movie = JSONUtils.toMovieTrailer(response);
+                    JSONUtils.populeMovieTrailer(movieSelected, response);
 
-                    return movie;
+
+                    strUrl = String.format(getString(R.string.reviews_url), id);
+                    url = NetworkUtils.buildUrl(strUrl, token);
+
+                    response = NetworkUtils.getHttpResponse(url);
+                    JSONUtils.populeMovieReviews(movieSelected, response);
+
+                    return movieSelected;
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
 
                 return null;
             }
@@ -139,7 +145,6 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
             //mSearchResultsTextView.setText(data);
             //showJsonDataView();
         }
-
     }
 
     @Override
