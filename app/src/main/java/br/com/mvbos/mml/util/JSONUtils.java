@@ -63,11 +63,13 @@ public class JSONUtils {
                     String key = json.getString("key");
                     String name = json.getString("name");
                     String site = json.getString("site");
+                    String type = json.getString("type");
 
                     trailers[i] = new Trailer(trailerId);
                     trailers[i].setKey(key);
                     trailers[i].setName(name);
                     trailers[i].setSite(site);
+                    trailers[i].setType(type);
                 }
 
                 movie.setTrailers(trailers);
@@ -97,11 +99,13 @@ public class JSONUtils {
                     String key = json.getString("key");
                     String name = json.getString("name");
                     String site = json.getString("site");
+                    String type = json.getString("type");
 
                     trailers[i] = new Trailer(trailerId);
                     trailers[i].setKey(key);
                     trailers[i].setName(name);
                     trailers[i].setSite(site);
+                    trailers[i].setType(type);
                 }
 
                 movie.setTrailers(trailers);

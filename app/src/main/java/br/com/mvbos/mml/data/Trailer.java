@@ -8,6 +8,7 @@ public class Trailer {
     private String id;
     private String key;
     private String name;
+    private String type;
     private String site;
 
     public Trailer(String id) {
@@ -46,6 +47,14 @@ public class Trailer {
         this.site = site;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,12 +71,14 @@ public class Trailer {
         return id.hashCode();
     }
 
+
     @Override
     public String toString() {
         return "Trailer{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", key='" + key + '\'' +
                 ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
                 ", site='" + site + '\'' +
                 '}';
     }

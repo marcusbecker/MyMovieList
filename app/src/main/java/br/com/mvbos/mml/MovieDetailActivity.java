@@ -6,6 +6,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 
+import br.com.mvbos.mml.adapter.ReviewAdapter;
+import br.com.mvbos.mml.adapter.TrailerAdapter;
 import br.com.mvbos.mml.data.Movie;
 import br.com.mvbos.mml.util.JSONUtils;
 import br.com.mvbos.mml.util.NetworkUtils;
@@ -30,6 +34,12 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     private TextView vote;
     private TextView overview;
 
+    private TrailerAdapter trailerAdapter;
+    private RecyclerView trailerRecyclerView;
+
+    private ReviewAdapter reviewAdapter;
+    private RecyclerView reviewRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,16 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         overview = (TextView) findViewById(R.id.tvOverview);
 
         poster = (ImageView) findViewById(R.id.ivPoster);
+
+        trailerAdapter = new TrailerAdapter();
+        trailerRecyclerView = (RecyclerView) findViewById(R.id.rvTrailer);
+        trailerRecyclerView.setLayoutManager(new LinearLayoutManager(MovieDetailActivity.this));
+        trailerRecyclerView.setAdapter(trailerAdapter);
+
+        reviewAdapter = new ReviewAdapter();
+        reviewRecyclerView = (RecyclerView) findViewById(R.id.rvReview);
+        reviewRecyclerView.setLayoutManager(new LinearLayoutManager(MovieDetailActivity.this));
+        reviewRecyclerView.setAdapter(reviewAdapter);
 
         Intent intent = getIntent();
         if (intent.hasExtra(Movie.PARCELABLE_KEY)) {
@@ -111,7 +131,6 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
                     String response = NetworkUtils.getHttpResponse(url);
                     JSONUtils.populeMovieTrailer(movieSelected, response);
 
-
                     strUrl = String.format(getString(R.string.reviews_url), id);
                     url = NetworkUtils.buildUrl(strUrl, token);
 
@@ -142,6 +161,8 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         if (null == data) {
             //showErrorMessage();
         } else {
+            trailerAdapter.setTrailers(data.getTrailers());
+            reviewAdapter.setReviews(data.getReviews());
             //mSearchResultsTextView.setText(data);
             //showJsonDataView();
         }

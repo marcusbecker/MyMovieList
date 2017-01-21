@@ -1,4 +1,4 @@
-package br.com.mvbos.mml;
+package br.com.mvbos.mml.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import br.com.mvbos.mml.R;
 import br.com.mvbos.mml.data.Movie;
 
 /**

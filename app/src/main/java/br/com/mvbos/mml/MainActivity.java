@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import br.com.mvbos.mml.adapter.MovieAdapter;
 import br.com.mvbos.mml.data.Movie;
 import br.com.mvbos.mml.service.MovieService;
 
