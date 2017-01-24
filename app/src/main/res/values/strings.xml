@@ -14,4 +14,6 @@
     <string name="movie_title">%1$s: %2$s</string>
     <string name="text_example">Text Example</string>
     <string name="you_tube">https://www.youtube.com/watch?v=%1$s</string>
+    <string name="my_book_mark">My Book Mark</string>
+    <string name="local_movies">Book Mark</string>
 </resources>

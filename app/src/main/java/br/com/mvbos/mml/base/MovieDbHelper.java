@@ -6,9 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.mvbos.mml.data.Movie;
 
 /**
@@ -88,8 +85,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         return count > 0;
     }
 
-    public List<Movie> selectMovies() {
-        List<Movie> list = new ArrayList<>(10);
+    public Movie[] selectMovies() {
 
         String[] projection = {
                 MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID,
@@ -118,8 +114,11 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         );
 
         //final boolean b = cursor.moveToFirst();
+        short index = 0;
+        Movie[] result = new Movie[cursor.getCount()];
+
         while (cursor.moveToNext()) {
-            //long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry._ID));
+            //long id = cursor.getLong(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry._ID));
             long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID));
             String title = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_TITLE));
             String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_IMAGE_PATH));
@@ -134,12 +133,12 @@ public class MovieDbHelper extends SQLiteOpenHelper {
             movie.setOverview(overview);
             movie.setReleaseDate(release);
 
-            list.add(movie);
+            result[index++] = movie;
         }
 
         cursor.close();
 
-        return list;
+        return result;
     }
 
     public int deleteMovie(Movie movie) {

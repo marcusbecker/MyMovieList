@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
     private MovieAdapter movieAdapter;
     private Movie[] moviesArray;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
         } else if (item.getItemId() == R.id.action_top_rated) {
             executeService(MovieService.RATED);
             return true;
+
+        } else if (item.getItemId() == R.id.action_local) {
+            executeService(MovieService.LOCAL);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -80,8 +83,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
         String title;
         if (MovieService.POPULAR.equals(optionSel)) {
             title = getString(R.string.popular_movies);
-        } else {
+        } else if (MovieService.RATED.equals(optionSel)) {
             title = getString(R.string.top_rated_movies);
+        } else {
+            title = getString(R.string.local_movies);
         }
 
         setTitle(String.format(getString(R.string.movie_title), getString(R.string.app_name), title));

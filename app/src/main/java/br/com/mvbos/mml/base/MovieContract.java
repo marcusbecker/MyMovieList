@@ -1,5 +1,6 @@
 package br.com.mvbos.mml.base;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -7,6 +8,11 @@ import android.provider.BaseColumns;
  */
 
 public class MovieContract {
+
+    public static final String AUTHORITY = "br.com.mvbos.mml";
+    public static final Uri BASE_CONTENTURI = Uri.parse("content://" + AUTHORITY);
+    public static final String PATH_TASKS = "tasks";
+
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String INT_TYPE = " INTEGER";
@@ -30,6 +36,9 @@ public class MovieContract {
     }
 
     public static class MovieEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENTURI.buildUpon().appendPath(PATH_TASKS).build();
+
         public static final String TABLE_NAME = "movieentry";
         public static final String COLUMN_NAME_MOVIE_ID = "movieId";
         public static final String COLUMN_NAME_TITLE = "title";

@@ -9,7 +9,7 @@ import android.os.Parcelable;
  */
 public class Movie implements Parcelable {
     public static final String PARCELABLE_KEY = "parcel_movie";
-    public static final java.lang.String ID_KEY = "id_movie";
+    public static final String ID_KEY = "id_movie";
 
     private long id;
     private String title;

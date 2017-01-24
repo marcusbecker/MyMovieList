@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import java.net.URL;
 
 import br.com.mvbos.mml.R;
+import br.com.mvbos.mml.base.MovieDbHelper;
 import br.com.mvbos.mml.data.Movie;
 import br.com.mvbos.mml.util.JSONUtils;
 import br.com.mvbos.mml.util.NetworkUtils;
@@ -18,6 +19,7 @@ public class MovieService extends AsyncTask<String, Void, Movie[]> {
 
     public static final String RATED = "top_rated";
     public static final String POPULAR = "popular";
+    public static final String LOCAL = "local_base";
 
     public interface AsyncTaskDelegate<T> {
         void processFinish(T output);
@@ -50,20 +52,28 @@ public class MovieService extends AsyncTask<String, Void, Movie[]> {
         String token = context.getString(R.string.token);
 
         String order;
-        if (POPULAR.equals(param)) {
-            order = context.getString(R.string.popular_url);
+
+        if (LOCAL.equals(param)) {
+            MovieDbHelper dbHelper = new MovieDbHelper(context);
+            movies = dbHelper.selectMovies();
+
         } else {
-            order = context.getString(R.string.top_rated_url);
-        }
 
-        URL url = NetworkUtils.buildUrl(order, token);
+            if (POPULAR.equals(param)) {
+                order = context.getString(R.string.popular_url);
+            } else {
+                order = context.getString(R.string.top_rated_url);
+            }
 
-        try {
-            String response = NetworkUtils.getHttpResponse(url);
-            movies = JSONUtils.toMovies(response);
+            URL url = NetworkUtils.buildUrl(order, token);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                String response = NetworkUtils.getHttpResponse(url);
+                movies = JSONUtils.toMovies(response);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return movies;
