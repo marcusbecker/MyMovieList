@@ -62,29 +62,6 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public long insertMovie(Movie movie) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID, movie.getId());
-        values.put(MovieContract.MovieEntry.COLUMN_NAME_TITLE, movie.getTitle());
-        values.put(MovieContract.MovieEntry.COLUMN_NAME_IMAGE_PATH, movie.getImagePath());
-        values.put(MovieContract.MovieEntry.COLUMN_NAME_RATING, movie.getRating());
-        values.put(MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW, movie.getOverview());
-        values.put(MovieContract.MovieEntry.COLUMN_NAME_RELEASE, movie.getReleaseDate());
-
-        try {
-            return db.insert(MovieContract.MovieEntry.TABLE_NAME, null, values);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            db.close();
-        }
-
-        return -1;
-    }
-
     public boolean isInBookMark(Movie movie) {
         SQLiteDatabase db = getReadableDatabase();
 
@@ -110,6 +87,29 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return count > 0;
+    }
+
+    public long insertMovie(Movie movie) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID, movie.getId());
+        values.put(MovieContract.MovieEntry.COLUMN_NAME_TITLE, movie.getTitle());
+        values.put(MovieContract.MovieEntry.COLUMN_NAME_IMAGE_PATH, movie.getImagePath());
+        values.put(MovieContract.MovieEntry.COLUMN_NAME_RATING, movie.getRating());
+        values.put(MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW, movie.getOverview());
+        values.put(MovieContract.MovieEntry.COLUMN_NAME_RELEASE, movie.getReleaseDate());
+
+        try {
+            return db.insert(MovieContract.MovieEntry.TABLE_NAME, null, values);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            db.close();
+        }
+
+        return -1;
     }
 
     public Movie[] selectMovies() {
@@ -147,7 +147,6 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
         return result;
     }
-
 
     public int deleteMovie(Movie movie) {
         SQLiteDatabase db = getWritableDatabase();

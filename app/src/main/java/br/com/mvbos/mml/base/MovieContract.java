@@ -15,7 +15,7 @@ public class MovieContract {
 
 
     private static final String TEXT_TYPE = " TEXT";
-    private static final String INT_TYPE = " INTEGER";
+    //private static final String INT_TYPE = " INTEGER";
     private static final String REAL_TYPE = " REAL";
     private static final String COMMA_SEP = ",";
 

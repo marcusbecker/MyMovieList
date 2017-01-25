@@ -31,12 +31,12 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
     private static final int TRAILER_LOADER_ID = 32;
 
-    private Movie movieSelected;
     private TextView title;
-    private ImageView poster;
     private TextView release;
     private TextView vote;
     private TextView overview;
+
+    private ImageView poster;
 
     private TrailerAdapter trailerAdapter;
     private RecyclerView trailerRecyclerView;
@@ -45,6 +45,7 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     private RecyclerView reviewRecyclerView;
 
     private boolean inBookMark;
+    private Movie movieSelected;
 
 
     @Override
@@ -139,8 +140,6 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         } else {
             trailerAdapter.setTrailers(data.getTrailers());
             reviewAdapter.setReviews(data.getReviews());
-            //mSearchResultsTextView.setText(data);
-            //showJsonDataView();
         }
     }
 
@@ -148,23 +147,8 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     public void onLoaderReset(Loader<Movie> loader) {
     }
 
-    /*
     public void addBookMark(View view) {
-        MovieDbHelper db = new MovieDbHelper(this);
-
-        if (inBookMark) {
-            db.deleteMovie(movieSelected);
-        } else {
-            db.insertMovie(movieSelected);
-        }
-
-        inBookMark = !inBookMark;
-        updateBookMarkButton();
-    }
-    */
-
-    public void addBookMark(View view) {
-        Uri uri = null;
+        Uri uri;
         ContentValues values = new ContentValues();
         values.put(MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID, movieSelected.getId());
 
