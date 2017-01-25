@@ -1,11 +1,13 @@
 package br.com.mvbos.mml.service;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 
 import java.net.URL;
 
 import br.com.mvbos.mml.R;
+import br.com.mvbos.mml.base.MovieContract;
 import br.com.mvbos.mml.base.MovieDbHelper;
 import br.com.mvbos.mml.data.Movie;
 import br.com.mvbos.mml.util.JSONUtils;
@@ -54,8 +56,10 @@ public class MovieService extends AsyncTask<String, Void, Movie[]> {
         String order;
 
         if (LOCAL.equals(param)) {
-            MovieDbHelper dbHelper = new MovieDbHelper(context);
-            movies = dbHelper.selectMovies();
+            //MovieDbHelper dbHelper = new MovieDbHelper(context);
+            //movies = dbHelper.selectMovies();
+            Cursor cursor = context.getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI, null, null, null, null);
+            movies = MovieDbHelper.convertCursortoMovie(cursor);
 
         } else {
 

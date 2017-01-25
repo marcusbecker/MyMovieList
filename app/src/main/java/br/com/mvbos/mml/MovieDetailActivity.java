@@ -1,5 +1,6 @@
 package br.com.mvbos.mml;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -18,6 +20,7 @@ import java.util.Locale;
 
 import br.com.mvbos.mml.adapter.ReviewAdapter;
 import br.com.mvbos.mml.adapter.TrailerAdapter;
+import br.com.mvbos.mml.base.MovieContract;
 import br.com.mvbos.mml.base.MovieDbHelper;
 import br.com.mvbos.mml.data.Movie;
 import br.com.mvbos.mml.data.Review;
@@ -78,7 +81,6 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
             Picasso.with(MovieDetailActivity.this).load(path).into(poster);
 
             final LoaderManager loaderManager = getSupportLoaderManager();
-            loaderManager.initLoader(TRAILER_LOADER_ID, null, this);
 
             Bundle myBundle = new Bundle();
             myBundle.putLong(Movie.ID_KEY, movieSelected.getId());
@@ -146,6 +148,7 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     public void onLoaderReset(Loader<Movie> loader) {
     }
 
+    /*
     public void addBookMark(View view) {
         MovieDbHelper db = new MovieDbHelper(this);
 
@@ -157,6 +160,39 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
         inBookMark = !inBookMark;
         updateBookMarkButton();
+    }
+    */
+
+    public void addBookMark(View view) {
+        Uri uri = null;
+        ContentValues values = new ContentValues();
+        values.put(MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID, movieSelected.getId());
+
+        if (inBookMark) {
+            uri = MovieContract.MovieEntry.CONTENT_URI;
+            uri = uri.buildUpon().appendPath(String.valueOf(movieSelected.getId())).build();
+
+            int res = getContentResolver().delete(uri, null, null);
+            if (res == 0)
+                uri = null;
+
+        } else {
+            values.put(MovieContract.MovieEntry.COLUMN_NAME_TITLE, movieSelected.getTitle());
+            values.put(MovieContract.MovieEntry.COLUMN_NAME_IMAGE_PATH, movieSelected.getImagePath());
+            values.put(MovieContract.MovieEntry.COLUMN_NAME_RATING, movieSelected.getRating());
+            values.put(MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW, movieSelected.getOverview());
+            values.put(MovieContract.MovieEntry.COLUMN_NAME_RELEASE, movieSelected.getReleaseDate());
+
+            uri = getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, values);
+        }
+
+        if (uri != null) {
+            inBookMark = !inBookMark;
+            updateBookMarkButton();
+
+        } else {
+            Toast.makeText(this, getString(R.string.error_message), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateBookMarkButton() {

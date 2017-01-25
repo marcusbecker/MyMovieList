@@ -11,7 +11,7 @@ public class MovieContract {
 
     public static final String AUTHORITY = "br.com.mvbos.mml";
     public static final Uri BASE_CONTENTURI = Uri.parse("content://" + AUTHORITY);
-    public static final String PATH_TASKS = "tasks";
+    public static final String PATH_MOVIES = "movies";
 
 
     private static final String TEXT_TYPE = " TEXT";
@@ -37,7 +37,7 @@ public class MovieContract {
 
     public static class MovieEntry implements BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENTURI.buildUpon().appendPath(PATH_TASKS).build();
+        public static final Uri CONTENT_URI = BASE_CONTENTURI.buildUpon().appendPath(PATH_MOVIES).build();
 
         public static final String TABLE_NAME = "movieentry";
         public static final String COLUMN_NAME_MOVIE_ID = "movieId";

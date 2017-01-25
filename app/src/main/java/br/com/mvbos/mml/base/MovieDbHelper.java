@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 import br.com.mvbos.mml.data.Movie;
 
@@ -15,8 +16,8 @@ import br.com.mvbos.mml.data.Movie;
 public class MovieDbHelper extends SQLiteOpenHelper {
 
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Movie.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "Movie.db";
 
     public MovieDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,6 +34,32 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
+    }
+
+    @NonNull
+    public static Movie[] convertCursortoMovie(Cursor cursor) {
+        short index = 0;
+        Movie[] result = new Movie[cursor.getCount()];
+
+        while (cursor.moveToNext()) {
+            //long id = cursor.getLong(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry._ID));
+            long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID));
+            String title = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_TITLE));
+            String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_IMAGE_PATH));
+            float rating = cursor.getFloat(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_RATING));
+            String overview = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW));
+            String release = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_RELEASE));
+
+            Movie movie = new Movie(itemId);
+            movie.setTitle(title);
+            movie.setImagePath(imagePath);
+            movie.setRating(rating);
+            movie.setOverview(overview);
+            movie.setReleaseDate(release);
+
+            result[index++] = movie;
+        }
+        return result;
     }
 
     public long insertMovie(Movie movie) {
@@ -114,32 +141,13 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         );
 
         //final boolean b = cursor.moveToFirst();
-        short index = 0;
-        Movie[] result = new Movie[cursor.getCount()];
-
-        while (cursor.moveToNext()) {
-            //long id = cursor.getLong(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry._ID));
-            long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID));
-            String title = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_TITLE));
-            String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_IMAGE_PATH));
-            float rating = cursor.getFloat(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_RATING));
-            String overview = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW));
-            String release = cursor.getString(cursor.getColumnIndexOrThrow(MovieContract.MovieEntry.COLUMN_NAME_RELEASE));
-
-            Movie movie = new Movie(itemId);
-            movie.setTitle(title);
-            movie.setImagePath(imagePath);
-            movie.setRating(rating);
-            movie.setOverview(overview);
-            movie.setReleaseDate(release);
-
-            result[index++] = movie;
-        }
+        Movie[] result = convertCursortoMovie(cursor);
 
         cursor.close();
 
         return result;
     }
+
 
     public int deleteMovie(Movie movie) {
         SQLiteDatabase db = getWritableDatabase();
