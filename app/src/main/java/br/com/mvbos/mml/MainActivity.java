@@ -18,12 +18,14 @@ import br.com.mvbos.mml.service.MovieService;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ClickListItemListener, MovieService.AsyncTaskDelegate<Movie[]> {
 
-
+    private static final String SELECTED_ORDER = "orderSel";
     private TextView errorMessage;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
     private Movie[] moviesArray;
+
+    private String order = MovieService.POPULAR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +45,21 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
 
         movieAdapter.setClickListItemListener(this);
 
-        executeService(MovieService.POPULAR);
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_ORDER)) {
+            order = savedInstanceState.getString(SELECTED_ORDER);
+        }
+
+        executeService(order);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SELECTED_ORDER, order);
     }
 
     private void executeService(String order) {
+        this.order = order;
         progressBar.setVisibility(View.VISIBLE);
         MovieService movieService = new MovieService(MainActivity.this, this);
         movieService.execute(order);
