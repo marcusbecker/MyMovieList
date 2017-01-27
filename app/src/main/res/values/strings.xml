@@ -16,4 +16,7 @@
     <string name="you_tube">https://www.youtube.com/watch?v=%1$s</string>
     <string name="my_book_mark">My Book Mark</string>
     <string name="local_movies">Book Mark</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="add_to_bookmark">Add to bookmark</string>
 </resources>
