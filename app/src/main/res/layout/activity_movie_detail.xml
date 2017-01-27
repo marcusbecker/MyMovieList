@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_movie_detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    tools:context=".MovieDetailActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TextTitle"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/text_example" />
+
+        <ImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="230dp"
+            android:layout_height="349dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/movie_poster"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:srcCompat="@android:color/background_light" />
+
+        <TextView
+            android:id="@+id/tvRelease"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@+id/ivPoster"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="@string/text_example" />
+
+        <TextView
+            android:id="@+id/tvVote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintLeft_toRightOf="@+id/ivPoster"
+            app:layout_constraintTop_toBottomOf="@+id/tvRelease"
+            tools:text="@string/text_example" />
+
+        <ImageView
+            android:id="@+id/ivBookMark"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/heart_half"
+            android:contentDescription="@string/add_to_bookmark"
+            android:onClick="addBookMark"
+            app:layout_constraintLeft_toRightOf="@+id/ivPoster"
+            app:layout_constraintTop_toBottomOf="@+id/tvVote" />
+
+        <TextView
+            android:id="@+id/tvOverview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivPoster"
+            tools:text="@string/text_example" />
+
+        <TextView
+            android:id="@+id/textTrailer"
+            style="@style/TextSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorSecondaryBackground"
+            android:padding="15dp"
+            android:text="@string/trailers"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTrailer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textTrailer"
+            tools:text="@string/text_example" />
+
+        <TextView
+            android:id="@+id/textReview"
+            style="@style/TextSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@color/colorSecondaryBackground"
+            android:padding="15dp"
+            android:text="@string/reviews"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvTrailer" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvReview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textReview" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
