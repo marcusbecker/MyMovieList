@@ -119,9 +119,10 @@ public class MovieContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
 
         final SQLiteDatabase db = movieDbHelper.getWritableDatabase();
+        String where  = MovieContract.MovieEntry.COLUMN_NAME_MOVIE_ID + "=?";
 
         if (match == MOVIE_WITH_ID) {
-            result = db.delete(MovieContract.MovieEntry.TABLE_NAME, "_id=?", new String[]{uri.getPathSegments().get(1)});
+            result = db.delete(MovieContract.MovieEntry.TABLE_NAME, where, new String[]{uri.getPathSegments().get(1)});
 
         } else {
             throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -134,7 +135,7 @@ public class MovieContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
+    public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
     }
 }

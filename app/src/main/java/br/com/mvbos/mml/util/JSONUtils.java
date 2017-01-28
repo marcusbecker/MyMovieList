@@ -9,7 +9,7 @@ import br.com.mvbos.mml.data.Review;
 import br.com.mvbos.mml.data.Trailer;
 
 /**
- * Parse JSON resposes to Java Objects
+ * Parse JSON responses to Java Objects
  * Created by Marcus Becker on 04/01/2017.
  */
 public class JSONUtils {

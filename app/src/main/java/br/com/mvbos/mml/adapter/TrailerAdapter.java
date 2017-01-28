@@ -16,7 +16,6 @@ import br.com.mvbos.mml.data.Trailer;
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerAdapterViewHolder> {
 
-    private Context context;
     private Trailer[] trailers;
     private ClickListItemListener clickListItemListener;
 
@@ -44,7 +43,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
 
     @Override
     public TrailerAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        this.context = parent.getContext();
+        Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.trailer_list_item, parent, false);
 

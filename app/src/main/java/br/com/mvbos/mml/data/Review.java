@@ -4,7 +4,7 @@ package br.com.mvbos.mml.data;
  * Created by Marcus Becker on 19/01/2017.
  */
 public class Review {
-    public static final int MAX_LENGHT = 150;
+    private static final int MAX_LENGHT = 150;
     private String reviewId;
     private String author;
     private String content;

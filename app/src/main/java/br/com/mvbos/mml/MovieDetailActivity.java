@@ -31,27 +31,26 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
     private static final int TRAILER_LOADER_ID = 32;
 
-    private TextView title;
-    private TextView release;
-    private TextView vote;
-    private TextView overview;
-
-    private ImageView poster;
-
-    private TrailerAdapter trailerAdapter;
     private RecyclerView trailerRecyclerView;
-
-    private ReviewAdapter reviewAdapter;
     private RecyclerView reviewRecyclerView;
+    private TrailerAdapter trailerAdapter;
+    private ReviewAdapter reviewAdapter;
 
     private boolean inBookMark;
     private Movie movieSelected;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+
+        TextView title;
+        TextView release;
+        TextView vote;
+        TextView overview;
+
+        ImageView poster;
+
 
         title = (TextView) findViewById(R.id.tvTitle);
         release = (TextView) findViewById(R.id.tvRelease);

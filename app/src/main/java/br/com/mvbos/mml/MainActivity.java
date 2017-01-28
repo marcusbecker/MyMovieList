@@ -53,6 +53,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (MovieService.LOCAL.equals(order)) {
+            executeService(order);
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(SELECTED_ORDER, order);
