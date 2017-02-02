@@ -60,6 +60,7 @@ public class MovieService extends AsyncTask<String, Void, Movie[]> {
             //movies = dbHelper.selectMovies();
             Cursor cursor = context.getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI, null, null, null, null);
             movies = MovieDbHelper.convertCursortoMovie(cursor);
+            cursor.close();
 
         } else {
 

@@ -170,8 +170,16 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         }
 
         if (uri != null) {
+            String notification;
+            if (inBookMark) {
+                notification = getString(R.string.movie_removed);
+            } else {
+                notification = getString(R.string.movie_added);
+            }
+
             inBookMark = !inBookMark;
             updateBookMarkButton();
+            Toast.makeText(this, notification, Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(this, getString(R.string.error_message), Toast.LENGTH_SHORT).show();

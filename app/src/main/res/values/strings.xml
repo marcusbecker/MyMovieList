@@ -20,4 +20,6 @@
     <string name="reviews">Reviews</string>
     <string name="add_to_bookmark">Add to bookmark</string>
     <string name="play_icon">Play icon</string>
+    <string name="movie_removed">Movie removed.</string>
+    <string name="movie_added">Movie added.</string>
 </resources>
