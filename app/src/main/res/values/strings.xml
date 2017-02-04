@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">My Movie List</string>
     <string name="error_message">Sorry&#8230; Error to load movies</string>
+    <string name="popular_movies">Most popular</string>
+    <string name="top_rated_movies">Top rated</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="movie_title">%1$s: %2$s</string>
+    <string name="you_tube">https://www.youtube.com/watch?v=%1$s</string>
+    <string name="my_book_mark">My Bookmark</string>
+    <string name="local_movies">Bookmark</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="add_to_bookmark">Add to bookmark</string>
+    <string name="play_icon">Play icon</string>
+    <string name="movie_removed">Movie removed.</string>
+    <string name="movie_added">Movie added.</string>
     <string name="token" translatable="false"></string>
     <string name="popular_url" translatable="false">http://api.themoviedb.org/3/movie/popular</string>
     <string name="top_rated_url" translatable="false">http://api.themoviedb.org/3/movie/top_rated</string>
@@ -8,18 +21,6 @@
     <string name="reviews_url" translatable="false">http://api.themoviedb.org/3/movie/%1$d/reviews</string>
     <string name="image_url" translatable="false">http://image.tmdb.org/t/p/w500</string>
     <string name="image_url_thumb" translatable="false">http://image.tmdb.org/t/p/w185</string>
-    <string name="popular_movies">Most popular</string>
-    <string name="top_rated_movies">Top rated</string>
-    <string name="movie_poster">Movie Poster</string>
-    <string name="movie_title">%1$s: %2$s</string>
-    <string name="text_example">Text Example</string>
-    <string name="you_tube">https://www.youtube.com/watch?v=%1$s</string>
-    <string name="my_book_mark">My Book Mark</string>
-    <string name="local_movies">Book Mark</string>
-    <string name="trailers">Trailers</string>
-    <string name="reviews">Reviews</string>
-    <string name="add_to_bookmark">Add to bookmark</string>
-    <string name="play_icon">Play icon</string>
-    <string name="movie_removed">Movie removed.</string>
-    <string name="movie_added">Movie added.</string>
+    <string name="text_example" translatable="false">Text Example</string>
+    <string name="movies">Movies</string>
 </resources>

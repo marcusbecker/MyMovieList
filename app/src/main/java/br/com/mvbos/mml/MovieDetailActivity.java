@@ -70,7 +70,7 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
             inBookMark = dbHelper.isInBookMark(movieSelected);
             updateBookMarkButton();
 
-            setTitle(String.format(getString(R.string.movie_title), getString(R.string.app_name), movieSelected.getTitle()));
+            setTitle(String.format(getString(R.string.movie_title), getString(R.string.movies), movieSelected.getTitle()));
 
             title.setText(movieSelected.getTitle());
             release.setText(movieSelected.getReleaseDate());

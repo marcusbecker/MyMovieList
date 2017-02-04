@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Minha Lista de Filmes</string>
+    <string name="error_message">Desculpe&#8230; Erro ao carregar filmes.</string>
+    <string name="popular_movies">Mais populares</string>
+    <string name="top_rated_movies">Mais votados</string>
+    <string name="movie_poster">Poster do filme</string>
+    <string name="my_book_mark">Meus Favoritos</string>
+    <string name="local_movies">Favoritos</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Resenhas</string>
+    <string name="add_to_bookmark">Adicionar à favoritos</string>
+    <string name="play_icon">Ícone play</string>
+    <string name="movie_removed">Filme removido.</string>
+    <string name="movie_added">Filme adicionado.</string>
+    <string name="movies">Filmes</string>
+</resources>

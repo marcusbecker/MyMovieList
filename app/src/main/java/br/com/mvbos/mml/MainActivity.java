@@ -3,6 +3,7 @@ package br.com.mvbos.mml;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +13,21 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import br.com.mvbos.mml.adapter.MovieAdapter;
 import br.com.mvbos.mml.data.Movie;
 import br.com.mvbos.mml.service.MovieService;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ClickListItemListener, MovieService.AsyncTaskDelegate<Movie[]> {
+
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({LOCATION_OK, LOCATION_ERROR})
+    public @interface LocationStatu{}
+    public  static  final int LOCATION_OK = 0;
+    public  static  final int LOCATION_ERROR = 1;
 
     private static final String SELECTED_ORDER = "orderSel";
     private TextView errorMessage;
@@ -111,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Clic
             title = getString(R.string.local_movies);
         }
 
-        setTitle(String.format(getString(R.string.movie_title), getString(R.string.app_name), title));
+        setTitle(String.format(getString(R.string.movie_title), getString(R.string.movies), title));
     }
 
 
